@@ -1,37 +1,35 @@
 import sys
-import time
+import json
+import requests
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 
-def http_requester():
-    """Selenium kullanarak HTTP isteği yapar."""
+def fetch_url(url):
+    """Selenium ile URL'yi açıp sayfa içeriğini döndürür."""
     options = Options()
-    options.add_argument("--headless")
+    options.add_argument("--headless")  # Görüntüsüz çalıştır
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
-
-    url = "https://example.com"  # Hedef URL
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
-    time.sleep(2)  # Sayfanın yüklenmesini bekle
-
-    response_body = driver.page_source
+    page_source = driver.page_source
     driver.quit()
 
-    return response_body[:500]  # İlk 500 karakteri döndürelim
+    return page_source
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Hata: Çalıştırılacak modül belirtilmedi.")
+        print("Kullanım: python http_requester.py <URL>")
         sys.exit(1)
 
-    module_name = sys.argv[1]
+    target_url = sys.argv[1]
+    print(f"İstek gönderiliyor: {target_url}")
 
-    if module_name == "http_requester":
-        print(http_requester())
-    else:
-        print(f"Hata: {module_name} modülü tanımlı değil.")
+    try:
+        page_content = fetch_url(target_url)
+        result = {"url": target_url, "content": page_content[:500]}  # İlk 500 karakteri al
+    except Exception as e:
+        result = {"url": target_url, "error": str(e)}
+
+    print(json.dumps(result))
