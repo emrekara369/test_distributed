@@ -11,7 +11,7 @@ def fetch_url(url):
     options.add_argument("--disable-dev-shm-usage")  # Dev.shm kullanımını devre dışı bırak
 
     # ChromeDriver'ı uygun yol ile başlatıyoruz
-    driver = webdriver.Chrome(executable_path='/path/to/chromedriver', options=options)
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
     page_source = driver.page_source
     driver.quit()
