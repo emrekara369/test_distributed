@@ -9,7 +9,7 @@ def fetch_url(url):
     options.add_argument("--headless")  # Görüntüsüz modda çalıştır
 
     # Firefox WebDriver (geckodriver) ile başlatıyoruz
-    driver = webdriver.Firefox(options=options)
+    driver = webdriver.Firefox(executable_path="/usr/local/bin/geckodriver", options=options)
     driver.get(url)
     page_source = driver.page_source
     driver.quit()
