@@ -1,15 +1,17 @@
 import sys
 import json
 from selenium import webdriver
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 
 def fetch_url(url):
     """Selenium ile URL'yi açıp sayfa içeriğini döndürür."""
     options = Options()
     options.add_argument("--headless")  # Görüntüsüz modda çalıştır
-
-    # Firefox WebDriver (geckodriver) ile başlatıyoruz
-    driver = webdriver.Firefox(executable_path="/usr/local/bin/geckodriver", options=options)
+    
+    service = Service("/usr/local/bin/geckodriver")  # Geckodriver yolu
+    driver = webdriver.Firefox(service=service, options=options)
+    
     driver.get(url)
     page_source = driver.page_source
     driver.quit()
