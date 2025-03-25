@@ -1,7 +1,6 @@
 import sys
 import json
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 
 def fetch_url(url):
@@ -9,8 +8,7 @@ def fetch_url(url):
     options = Options()
     options.add_argument("--headless")  # Görüntüsüz modda çalıştır
     
-    service = Service("/usr/local/bin/geckodriver")  # Geckodriver yolu
-    driver = webdriver.Firefox(service=service, options=options)
+    driver = webdriver.Firefox(options=options)
     
     driver.get(url)
     page_source = driver.page_source
