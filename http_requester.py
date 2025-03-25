@@ -1,14 +1,17 @@
 import sys
 import json
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 
 def fetch_url(url):
     """Selenium ile URL'yi açıp sayfa içeriğini döndürür."""
     options = Options()
-    options.add_argument("--headless")  # Görüntüsüz çalıştır
+    options.add_argument("--headless")  # Görüntüsüz modda çalıştır
+    options.add_argument("--no-sandbox")  # Sandbox problemi yaşamamak için
+    options.add_argument("--disable-dev-shm-usage")  # Dev.shm kullanımını devre dışı bırak
 
-    driver = webdriver.Firefox(options=options)
+    # ChromeDriver'ı uygun yol ile başlatıyoruz
+    driver = webdriver.Chrome(executable_path='/path/to/chromedriver', options=options)
     driver.get(url)
     page_source = driver.page_source
     driver.quit()
