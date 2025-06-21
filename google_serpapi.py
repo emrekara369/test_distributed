@@ -117,7 +117,7 @@ def search(query, start_date=None, end_date=None):
         list: A list of URLs related to the search query.
     """
     urls = fetch_urls(query, start_date, end_date)
-    with open("results.txt","w") as f:
+    with open("/home/ubuntu/results.txt","w") as f:
         f.write("\n".join(urls))
 
 search(sys.argv[-1])
