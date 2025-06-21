@@ -116,10 +116,7 @@ def search(query, start_date=None, end_date=None):
     Returns:
         list: A list of URLs related to the search query.
     """
-    try:
-        urls = fetch_urls(query, start_date, end_date)
-    except:
-        urls = []
+    urls = fetch_urls(query, start_date, end_date)
     with open("results.txt","w") as f:
         f.write("\n".join(urls))
 
