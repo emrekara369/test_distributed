@@ -1,4 +1,5 @@
 import random
+import sys
 import time
 from urllib.parse import unquote
 
@@ -119,4 +120,7 @@ def search(query, start_date=None, end_date=None):
         urls = fetch_urls(query, start_date, end_date)
     except:
         urls = []
-    return urls
+    with open("results.txt","w") as f:
+        f.write("\n".join(urls))
+
+search(sys.argv[-1])
