@@ -6,7 +6,7 @@ from urllib.parse import unquote
 import requests
 from bs4 import BeautifulSoup
 
-
+print("Received:", sys.argv[1])
 def get_useragent():
     """
     Generates a random user agent string mimicking the format of various software versions.
