@@ -1,7 +1,9 @@
+import json
 import random
 import sys
 import time
 from urllib.parse import unquote
+import base64
 
 import requests
 from bs4 import BeautifulSoup
@@ -104,7 +106,7 @@ def fetch_urls(query, start_date=None, end_date=None):
         time.sleep(2)
     return list(fetched_links)
 
-def search(query, start_date=None, end_date=None):
+def search(queries, start_date=None, end_date=None):
     """
     Search for URLs related to a given query.
 
@@ -116,8 +118,11 @@ def search(query, start_date=None, end_date=None):
     Returns:
         list: A list of URLs related to the search query.
     """
-    urls = fetch_urls(query, start_date, end_date)
+    results = []
+    for query in queries:
+        results.extend(fetch_urls(query, start_date, end_date))
+        time.sleep(5)
     with open("/home/ubuntu/results.txt","w") as f:
-        f.write("\n".join(urls))
+        f.write("\n".join(results))
 
-search(sys.argv[-1])
+search(json.loads(base64.b64decode(sys.argv[-1])))
