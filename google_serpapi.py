@@ -8,7 +8,6 @@ import base64
 import requests
 from bs4 import BeautifulSoup
 
-print("Received:", sys.argv[1])
 def get_useragent():
     """
     Generates a random user agent string mimicking the format of various software versions.
@@ -120,7 +119,9 @@ def search(queries, start_date=None, end_date=None):
     """
     results = []
     for query in queries:
+        print("Received:", query)
         results.extend(fetch_urls(query, start_date, end_date))
+        print("Total results", len(results))
         time.sleep(5)
     with open("/home/ubuntu/results.txt","w") as f:
         f.write("\n".join(results))
