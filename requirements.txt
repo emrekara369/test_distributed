@@ -1,2 +1,4 @@
 beautifulsoup4==4.13.3
 requests==2.32.3
+selenium==4.34.0
+xvfbwrapper==0.2.13
