@@ -50,7 +50,6 @@ def send_req_with_selenium(query, start_date=None, end_date=None):
                 page_number = len(driver.find_element(By.TAG_NAME,"tbody").find_elements(By.TAG_NAME,"td"))-2
             except:
                 page_number = 1
-            print(page_number)
             for page in range(1,page_number):
                 driver.get(driver.current_url+"&start="+str(page*10))
                 time.sleep(2)
