@@ -2,6 +2,7 @@ import base64
 import json
 import sys
 import time
+import traceback
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -37,8 +38,9 @@ def send_req_with_selenium(query, start_date=None, end_date=None):
             try:
                 driver.find_elements(By.TAG_NAME,"button")[4].click()
                 time.sleep(1)
-            except:
-                pass
+            except BaseException as ex:
+                error_msg = ''.join(traceback.format_exception(type(ex), value=ex, tb=ex.__traceback__))
+                print(error_msg)
 
             search_bar = driver.find_element(By.TAG_NAME,"textarea")
             search_bar.send_keys(query)
@@ -56,7 +58,9 @@ def send_req_with_selenium(query, start_date=None, end_date=None):
                     time.sleep(2)
                     search_result_div = driver.find_element(By.XPATH,'//div[@id="search"]')
                     results.extend([_.get_attribute("href") for _ in search_result_div.find_elements(By.TAG_NAME,"a")])
-        except:
+        except BaseException as ex:
+            error_msg = ''.join(traceback.format_exception(type(ex), value=ex, tb=ex.__traceback__))
+            print(error_msg)
             driver.quit()
         return results
 
