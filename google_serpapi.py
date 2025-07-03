@@ -44,17 +44,18 @@ def send_req_with_selenium(query, start_date=None, end_date=None):
             search_bar.send_keys(query)
             search_bar.submit()
             time.sleep(4)
-            search_result_div = driver.find_element(By.XPATH,'//div[@id="search"]')
-            results.extend([_.get_attribute("href") for _ in search_result_div.find_elements(By.TAG_NAME,"a")])
-            try:
-                page_number = len(driver.find_element(By.TAG_NAME,"tbody").find_elements(By.TAG_NAME,"td"))-2
-            except:
-                page_number = 1
-            for page in range(1,page_number):
-                driver.get(driver.current_url+"&start="+str(page*10))
-                time.sleep(2)
+            if driver.find_element(By.ID,"topstuff").size["height"] > 0:
                 search_result_div = driver.find_element(By.XPATH,'//div[@id="search"]')
                 results.extend([_.get_attribute("href") for _ in search_result_div.find_elements(By.TAG_NAME,"a")])
+                try:
+                    page_number = len(driver.find_element(By.TAG_NAME,"tbody").find_elements(By.TAG_NAME,"td"))-2
+                except:
+                    page_number = 1
+                for page in range(1,page_number):
+                    driver.get(driver.current_url+"&start="+str(page*10))
+                    time.sleep(2)
+                    search_result_div = driver.find_element(By.XPATH,'//div[@id="search"]')
+                    results.extend([_.get_attribute("href") for _ in search_result_div.find_elements(By.TAG_NAME,"a")])
         except:
             driver.quit()
         return results
