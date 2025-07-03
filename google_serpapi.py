@@ -44,7 +44,7 @@ def send_req_with_selenium(query, start_date=None, end_date=None):
             search_bar.send_keys(query)
             search_bar.submit()
             time.sleep(4)
-            if driver.find_element(By.ID,"topstuff").size["height"] > 0:
+            if driver.find_element(By.ID,"topstuff").size["height"] == 0:
                 search_result_div = driver.find_element(By.XPATH,'//div[@id="search"]')
                 results.extend([_.get_attribute("href") for _ in search_result_div.find_elements(By.TAG_NAME,"a")])
                 try:
